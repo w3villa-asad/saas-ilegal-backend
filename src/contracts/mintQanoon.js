@@ -32,9 +32,9 @@ const createTransfer = async (req, res) => {
     try {
         let { recieverAccount, recieverAmount } = req.body;
 
+        console.log("transfer amount", req.body);
         
-        
-        let confirmedTransaction = await mintQanoon.MintQAN(recieverAccount, recieverAmount);
+        let confirmedTransaction = await QANOON_Contract.transfer(recieverAccount, recieverAmount);
         res.status(200).json({
           succes: true,
           message: recieverAmount + " Qanoon is transfered  to " + recieverAccount,
