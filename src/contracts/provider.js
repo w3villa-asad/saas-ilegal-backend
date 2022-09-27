@@ -22,7 +22,7 @@ let QANOON_Contract = new ethers.Contract(
     walletSigner
 );
 
-console.log(walletSigner),
+// console.log(walletSigner)
 
 module.exports = {
     QANOON_Contract

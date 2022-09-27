@@ -5,7 +5,7 @@ const {
   QANOON_TOKEN_CONTRACT,
 } = Contracts();
 
-let provider = new ethers.providers.JsonRpcProvider("https://eth-ropsten.alchemyapi.io/v2/ZuEYyKLqeVaumEL4MGRaYfBrFVVLNcAB");
+let provider = new ethers.providers.JsonRpcProvider("https://eth-goerli.g.alchemy.com/v2/rP1ruMXTsu52w677aIgYnn5uPSv7VY6N");
 
  const getBalanceOfUser = async (userAdd) => {
   let userbalance = await QANOON_TOKEN_CONTRACT.balanceOf(userAdd);

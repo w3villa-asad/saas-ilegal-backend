@@ -8,6 +8,6 @@ const app = require('./src/app');
 // } catch (error) {
 //     console.log(error)
 // }
-const server = app.listen(5000, () => {
-    console.log(`Express is running on port ${server.address().port}`);
+app.listen(5000, () => {
+    console.log(`Express is running on port `);
 });

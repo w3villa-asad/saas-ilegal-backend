@@ -3,17 +3,36 @@ const ethers = require("ethers");
 let QANOON_Contract = contracts.QANOON_Contract;
 
 // let contract = new QANOON_Contract() contracts();
-let MintQAN = async (_account,amount)=>{
-
-    let tx = await QANOON_Contract.mint(_account,amount);
-    await tx.wait();
-    return tx;
+const MintQAN = async (req,res) => {
+  try{
+    // console.log("amount", req.body);
+    let { recieverAccount, recieverAmount } = req.body;
+    // console.log("new account",typeof recieverAccount, typeof recieverAmount);
+    // console.log("amount", req.body);
     
-}
+    let tx = await QANOON_Contract.mint(recieverAccount,recieverAmount);
+    await tx.wait();
+    // console.log("txn",tx);
+    // 
+    res.status(200).json({
+        success: true,
+        message: recieverAmount + " Qanoon is minted to " + recieverAccount,
+        data: tx,
+      });
+      return tx;
+    }
+      catch (error) {
+        throw new Error(error);
+      }
+    
+};
+
 
 const createTransfer = async (req, res) => {
     try {
         let { recieverAccount, recieverAmount } = req.body;
+
+        
         
         let confirmedTransaction = await mintQanoon.MintQAN(recieverAccount, recieverAmount);
         res.status(200).json({
@@ -45,7 +64,7 @@ const createTransfer = async (req, res) => {
         // console.log(confirmed_tx);
         return tx;
         }
-
+    
 
 module.exports = {
     MintQAN,
