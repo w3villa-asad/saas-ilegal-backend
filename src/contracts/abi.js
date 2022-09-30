@@ -254,6 +254,81 @@ const QANOON_TOKEN_ABI = [
   },
 ];
 
+const QANOON_DOCUMENT_FACTORY_ABI = [
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "create",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "bytes32", name: "_salt", type: "bytes32" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "create2",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "bytes32", name: "_salt", type: "bytes32" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "create2AndSendEther",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "createAndSendEther",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "documents",
+    outputs: [{ internalType: "contract Document", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_index", type: "uint256" }],
+    name: "getDocument",
+    outputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "string", name: "docType", type: "string" },
+      { internalType: "string", name: "uri", type: "string" },
+      { internalType: "address", name: "DocAddr", type: "address" },
+      { internalType: "uint256", name: "balance", type: "uint256" },
+      { internalType: "string", name: "docParams", type: "string" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
 module.exports = {
   QANOON_TOKEN_ABI,
+  QANOON_DOCUMENT_FACTORY_ABI
 };

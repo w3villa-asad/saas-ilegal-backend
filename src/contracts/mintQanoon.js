@@ -1,6 +1,7 @@
 const contracts = require("./provider");
 const ethers = require("ethers");
 let QANOON_Contract = contracts.QANOON_Contract;
+let QANOON_DOC = contracts.QANOON_DOC_Contract;
 
 // let contract = new QANOON_Contract() contracts();
 const MintQAN = async (req,res) => {
@@ -64,10 +65,28 @@ const createTransfer = async (req, res) => {
         // console.log(confirmed_tx);
         return tx;
         }
+        
+
+const documentCreate = async (req, res) => {
+    try {
+        let { docOwnerAddress, docType, docURI, docParams } = req.body;
+
+        let txn = await QANOON_DOC.create(docOwnerAddress, docType, docURI, docParams);
+        res.status(200).json({
+            success: true,
+            message: "document created successfully!!",
+            data: txn,
+        });
+
+    } catch (error) {
+        throw new Error(error);
+    }
+};
     
 
 module.exports = {
     MintQAN,
     createTransfer,
-    mintQANN
+    mintQANN,
+    documentCreate
 }

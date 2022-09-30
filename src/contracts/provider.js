@@ -2,6 +2,7 @@ const ethers = require("ethers");
 
 const {
     QANOON_TOKEN_ABI,
+    QANOON_DOCUMENT_FACTORY_ABI
 } = require("./abi");
 
 const contracts = require("../config/index");
@@ -22,8 +23,19 @@ let QANOON_Contract = new ethers.Contract(
     walletSigner
 );
 
+let QANOON_DOC_Contract = new ethers.Contract(
+    contracts.contracts.QANOON_DOCUMENT_FACTORY_ADD,
+    QANOON_DOCUMENT_FACTORY_ABI,
+    walletSigner
+);
+
+// console.log(QANOON_Contract);
+// console.log(QANOON_DOC_Contract);
+
+// module.
 // console.log(walletSigner)
 
 module.exports = {
-    QANOON_Contract
+    QANOON_Contract,
+    QANOON_DOC_Contract
 }
