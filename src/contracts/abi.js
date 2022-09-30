@@ -272,7 +272,6 @@ const QANOON_DOCUMENT_FACTORY_ABI = [
       { internalType: "address", name: "_owner", type: "address" },
       { internalType: "string", name: "_docType", type: "string" },
       { internalType: "string", name: "_uri", type: "string" },
-      { internalType: "bytes32", name: "_salt", type: "bytes32" },
       { internalType: "string", name: "_docParams", type: "string" },
     ],
     name: "create2",
@@ -285,7 +284,6 @@ const QANOON_DOCUMENT_FACTORY_ABI = [
       { internalType: "address", name: "_owner", type: "address" },
       { internalType: "string", name: "_docType", type: "string" },
       { internalType: "string", name: "_uri", type: "string" },
-      { internalType: "bytes32", name: "_salt", type: "bytes32" },
       { internalType: "string", name: "_docParams", type: "string" },
     ],
     name: "create2AndSendEther",
@@ -330,5 +328,5 @@ const QANOON_DOCUMENT_FACTORY_ABI = [
 
 module.exports = {
   QANOON_TOKEN_ABI,
-  QANOON_DOCUMENT_FACTORY_ABI
+  QANOON_DOCUMENT_FACTORY_ABI,
 };

@@ -6,6 +6,7 @@ const express = require("express");
 // import UserWalletCtrl from "../../controllers/userWalletController";
 const UserWalletCtrl = require("../../controllers/userWalletController");
 const mintQanoon = require("../../contracts/mintQanoon");
+const balance = require("../../web3-functions/getBalance");
 // require("../../controllers/index");
 
 const router = express.Router();
@@ -19,6 +20,9 @@ router.get("/getEthBalance", [UserWalletCtrl.getEthBalance]);
 router.post("/mintQAN", [mintQanoon.MintQAN]);
 router.post("/createTransfer",[mintQanoon.createTransfer]);
 router.post("/mintQANN",[mintQanoon.mintQANN]);
+router.get("/balance", [balance.getBalanceOfUser]);
+router.post("/createDocument", [mintQanoon.documentCreate]);
+
 // router.get("/getUtilityBalance", [isValid, UserWalletCtrl.getUtilityBalance]);
 // router.post("/transferQANOON",[isValid, UserWalletCtrl.transferQANOON]);
 // router.get("/transferHistory",[isValid,UserWalletCtrl.transferHistory]);

@@ -71,7 +71,12 @@ const documentCreate = async (req, res) => {
     try {
         let { docOwnerAddress, docType, docURI, docParams } = req.body;
 
+        // documentCreate
+        console.log("docOwnerAdd",docOwnerAddress);
+        console.log("document create", req.body);
+
         let txn = await QANOON_DOC.create(docOwnerAddress, docType, docURI, docParams);
+        console.log("Transaction", txn);
         res.status(200).json({
             success: true,
             message: "document created successfully!!",
