@@ -449,6 +449,45 @@ app.post("/validateDocument", async (req, res) => {
   }
 });
 
+app.get("/userTokenBalance", async (req, res)=> {
+  try{
+    let { userAdd } = req.body;
+    console.log(userAdd,"userAddress");
+  // userAdd = req.body;
+  console.log(req.body, "user Add");
+  let userbalance = await QANOON_Contract.balanceOf(userAdd);
+  let userbal = await ethers.utils.formatUnits(userbalance,18);
+  console.log(userbalance , "userbalance", userbal,"user bal");
+  res.status(200).json({
+    succes: true,
+    message: "Balance of user "+ userAdd,
+    data: userbal,
+  });
+    return(ethers.utils.formatUnits(userbalance,18));
+    // return(userbalance);
+
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.get("/userEthBal", async (req, res)=>{
+  try{
+  let { userAdd } = req.body;
+  let balance = await provider.getBalance(userAdd);
+  let bal = ethers.utils.formatEther(balance);
+  res.status(200).json({
+    success: true,
+    message: "your ether balance is "+ bal,
+    data: bal
+  });
+  return ethers.utils.formatEther(balance);
+  } catch (error){
+    throw new Error(error);
+  }
+
+});
+
 app.listen(port, () => {
   console.log("Express server listening on port %d in %s mode");
 });
