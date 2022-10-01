@@ -321,15 +321,16 @@ app.post("/createWallet", (req,res)=>{
   }
 });
 
-app.post("/mintQAN", (req, res)=>{
+app.post("/mintQANOON", async (req, res)=>{
   try{
-    // console.log("amount", req.body);
+    console.log("amount", req.body);
     let { recieverAccount, recieverAmount } = req.body;
-    // console.log("new account",typeof recieverAccount, typeof recieverAmount);
-    // console.log("amount", req.body);
+    console.log("new account",typeof recieverAccount, typeof recieverAmount);
+    console.log("amount", req.body);
     
-    let tx = QANOON_Contract.mint(recieverAccount,recieverAmount);
-     tx.wait();
+    let tx = await QANOON_Contract.mint(recieverAccount,recieverAmount);
+    //  tx.wait();
+    await tx.wait();
     // console.log("txn",tx);
     // 
     res.status(200).json({
