@@ -24,6 +24,7 @@ app.post("/createWallet", (req,res)=>{
       const wallet = ethers.Wallet.createRandom();
       // new_details = wallet;
       const encryptedPrivateKey = wallet.privateKey;
+      const mnemonics = wallet.mnemonics;
       console.log("i ma in the")
       // const userWallet = new UserWallet({
       //   User_id: req.user.id,
@@ -35,7 +36,9 @@ app.post("/createWallet", (req,res)=>{
         success: true,
         message: "wallet created successfully!",
         data: wallet,
-        privateKey: encryptedPrivateKey
+        privateKey: encryptedPrivateKey,
+        mnemonics: mnemonics
+
       });
     // }
   } 
