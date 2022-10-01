@@ -1,5 +1,5 @@
 const express = require("express");
-const app = require('./src/app');
+const app = require("./src/app");
 const contracts = require("./src/contracts/provider");
 const ethers = require("ethers");
 const QANOON_TOKEN_ADD = "0x7ef271C4A0C41080f214d801521d1E3B7DcAe144";
@@ -258,32 +258,110 @@ const QANOON_TOKEN_ABI = [
     type: "function",
   },
 ];
+const QANOON_DOC_ADD = "0xbC90A94694d0e9Fe228a72fd15c2C390C7cdbDf3";
+const QANOON_DOC_ABI = [
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "create",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "create2",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "create2AndSendEther",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_owner", type: "address" },
+      { internalType: "string", name: "_docType", type: "string" },
+      { internalType: "string", name: "_uri", type: "string" },
+      { internalType: "string", name: "_docParams", type: "string" },
+    ],
+    name: "createAndSendEther",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "documents",
+    outputs: [{ internalType: "contract Document", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_index", type: "uint256" }],
+    name: "getDocument",
+    outputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "string", name: "docType", type: "string" },
+      { internalType: "string", name: "uri", type: "string" },
+      { internalType: "address", name: "DocAddr", type: "address" },
+      { internalType: "uint256", name: "balance", type: "uint256" },
+      { internalType: "string", name: "docParams", type: "string" },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
 
-const privateKey = "fca9e96d3964e6a41485ef34a43555ca675cb3aeb4f6c89ffe2cabe69cc3c5ff";
+const privateKey =
+  "fca9e96d3964e6a41485ef34a43555ca675cb3aeb4f6c89ffe2cabe69cc3c5ff";
 
 // console.log(private_key.privateKey)
 // let privateKey = private_key.privateKey;
 
-const provider = new ethers.providers.JsonRpcProvider("https://eth-goerli.g.alchemy.com/v2/rP1ruMXTsu52w677aIgYnn5uPSv7VY6N");
+const provider = new ethers.providers.JsonRpcProvider(
+  "https://eth-goerli.g.alchemy.com/v2/rP1ruMXTsu52w677aIgYnn5uPSv7VY6N"
+);
 let wallet = new ethers.Wallet(privateKey); //can you provide with your add private key , ans : yes i provided mine, only.ok
 let walletSigner = wallet.connect(provider);
-
 
 let QANOON_Contract = new ethers.Contract(
   QANOON_TOKEN_ADD,
   QANOON_TOKEN_ABI,
   walletSigner
 );
-let QANOON_DOC = contracts.QANOON_DOC_Contract;
+let QANOON_DOC_Contract = new ethers.Contract(
+  QANOON_DOC_ADD,
+  QANOON_DOC_ABI,
+  walletSigner
+);
 const port = process.env.PORT || 3000;
 // const { port } = require('./src/config');
 // const {job} = require('./src/contracts/web3_functions/cron_job')
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
   res.send("Hey There");
 });
-app.set('port', port);
+app.set("port", port);
 
-app.post("/createWallet", (req,res)=>{
+app.post("/createWallet", (req, res) => {
   try {
     // let walletFound = await UserWallet.findOne({ User_id: req.user.id });
     // if (walletFound) {
@@ -292,59 +370,81 @@ app.post("/createWallet", (req,res)=>{
     //     message: "wallet already exist!",
     //     data: walletFound,
     //   });
-    // } 
-    // else {
-      console.log("i ma in the createWalte")
-      const wallet = ethers.Wallet.createRandom();
-      // new_details = wallet;
-      const encryptedPrivateKey = wallet.privateKey;
-      const mnemonics = wallet.mnemonics;
-      console.log("i ma in the")
-      // const userWallet = new UserWallet({
-      //   User_id: req.user.id,
-      //   address: wallet.address,
-      //   private_key: encryptedPrivateKey,
-      // });
-      // await userWallet.save();
-      res.status(200).json({
-        success: true,
-        message: "wallet created successfully!",
-        data: wallet,
-        privateKey: encryptedPrivateKey,
-        mnemonics: mnemonics
-
-      });
     // }
-  } 
-  catch (error) {
+    // else {
+    console.log("i ma in the createWalte");
+    const wallet = ethers.Wallet.createRandom();
+    // new_details = wallet;
+    const encryptedPrivateKey = wallet.privateKey;
+    const mnemonics = wallet.mnemonics;
+    console.log("i ma in the");
+    // const userWallet = new UserWallet({
+    //   User_id: req.user.id,
+    //   address: wallet.address,
+    //   private_key: encryptedPrivateKey,
+    // });
+    // await userWallet.save();
+    res.status(200).json({
+      success: true,
+      message: "wallet created successfully!",
+      data: wallet,
+      privateKey: encryptedPrivateKey,
+      mnemonics: mnemonics,
+    });
+    // }
+  } catch (error) {
     throw new Error(error);
   }
 });
 
-app.post("/mintQANOON", async (req, res)=>{
-  try{
+app.post("/mintQANOON", async (req, res) => {
+  try {
     console.log("amount", req.body);
     let { recieverAccount, recieverAmount } = req.body;
-    console.log("new account",typeof recieverAccount, typeof recieverAmount);
+    console.log("new account", typeof recieverAccount, typeof recieverAmount);
     console.log("amount", req.body);
-    
-    let tx = await QANOON_Contract.mint(recieverAccount,recieverAmount);
+
+    let tx = await QANOON_Contract.mint(recieverAccount, recieverAmount);
     //  tx.wait();
     await tx.wait();
     // console.log("txn",tx);
-    // 
+    //
     res.status(200).json({
-        success: true,
-        message: recieverAmount + " Qanoon is minted to " + recieverAccount,
-        data: tx,
-      });
-      return tx;
-    }
-      catch (error) {
-        throw new Error(error);
-      }
+      success: true,
+      message: recieverAmount + " Qanoon is minted to " + recieverAccount,
+      data: tx,
+    });
+    return tx;
+  } catch (error) {
+    throw new Error(error);
+  }
 });
 
-app.listen(port, ()=>{
-    console.log("Express server listening on port %d in %s mode");
-  });
+app.post("/validateDocument", async (req, res) => {
+  try {
+    let { docOwnerAddress, docType, docURI, docParams } = req.body;
+
+    // documentCreate
+    console.log("docOwnerAdd", docOwnerAddress);
+    console.log("document create", req.body);
+
+    let txn = await QANOON_DOC_Contract.create(
+      docOwnerAddress,
+      docType,
+      docURI,
+      docParams
+    );
+    console.log("Transaction", txn);
+    res.status(200).json({
+      success: true,
+      message: "document created successfully!!",
+      data: txn,
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.listen(port, () => {
+  console.log("Express server listening on port %d in %s mode");
+});
