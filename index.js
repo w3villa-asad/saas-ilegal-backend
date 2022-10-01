@@ -343,6 +343,7 @@ const provider = new ethers.providers.JsonRpcProvider(
 let wallet = new ethers.Wallet(privateKey); //can you provide with your add private key , ans : yes i provided mine, only.ok
 let walletSigner = wallet.connect(provider);
 
+
 let QANOON_Contract = new ethers.Contract(
   QANOON_TOKEN_ADD,
   QANOON_TOKEN_ABI,
@@ -361,7 +362,7 @@ app.get("/", (req, res) => {
 });
 app.set("port", port);
 
-app.post("/createWallet", (req, res) => {
+app.post("/createNewWallet", (req, res) => {
   try {
     // let walletFound = await UserWallet.findOne({ User_id: req.user.id });
     // if (walletFound) {
@@ -372,12 +373,13 @@ app.post("/createWallet", (req, res) => {
     //   });
     // }
     // else {
-    console.log("i ma in the createWalte");
+    // console.log("i ma in the createWalte");
     const wallet = ethers.Wallet.createRandom();
     // new_details = wallet;
     const encryptedPrivateKey = wallet.privateKey;
-    const mnemonics = wallet.mnemonics;
-    console.log("i ma in the");
+    const mnemonic = wallet.mnemonic.phrase;
+    console.log(mnemonic , "mnemonics");
+    // console.log("i a in the");
     // const userWallet = new UserWallet({
     //   User_id: req.user.id,
     //   address: wallet.address,
@@ -389,7 +391,7 @@ app.post("/createWallet", (req, res) => {
       message: "wallet created successfully!",
       data: wallet,
       privateKey: encryptedPrivateKey,
-      mnemonics: mnemonics,
+      mnemonics: mnemonic,
     });
     // }
   } catch (error) {
