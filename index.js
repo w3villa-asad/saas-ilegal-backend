@@ -2,6 +2,11 @@ const express = require("express");
 const app = require("./src/app");
 const contracts = require("./src/contracts/provider");
 const ethers = require("ethers");
+
+
+// CONTRACTS ADDRESSES AND ABI DECLARATION
+
+
 const QANOON_TOKEN_ADD = "0x7ef271C4A0C41080f214d801521d1E3B7DcAe144";
 const QANOON_TOKEN_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -588,194 +593,539 @@ const QANOON_ASASI_ABI = [
   },
 ];
 
+const QANOON_REWARDS = "0x8048475349df075A64eEe5aeD94D8b26440cB409";
+const QANOON_REWARDS_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "_initialSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
+    ],
+    name: "allowance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "subtractedValue", type: "uint256" },
+    ],
+    name: "decreaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "addedValue", type: "uint256" },
+    ],
+    name: "increaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transfer",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+const QANOON_PLUS = "0x0b032c92cC743e4f5B9b56F4b55f2bc99208b7EC";
+const QANOON_PLUS_ABI = [{"inputs":[{"internalType":"address","name":"_qanoonAsasi","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"_timestamps","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_account","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"buy","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"buyUsingAsasi","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"qanoonAsasi","outputs":[{"internalType":"contract IQanoonAsasi","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+
+const QANOON_PREMIUM = "0xCA8FaB902d336B0f78E1bC38de7B791240E42bbb";
+const QANOON_PREMIUM_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"_blacklisted","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"_timestamps","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getStakers","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"nextStaking","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"premiumCoins","outputs":[{"internalType":"uint256","name":"stakedBalance","type":"uint256"},{"internalType":"uint256","name":"timestamp","type":"uint256"},{"internalType":"string","name":"uid","type":"string"},{"internalType":"uint256","name":"expiry","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"removeBlacklistedUser","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"setBlacklistedUser","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_time","type":"uint256"},{"internalType":"string","name":"uid","type":"string"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"stakers","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+
+const QANOON_COMPLEMENTARY = "0x7a04b6BFaad228Bf56fa177Eec3472358f530208";
+const QANOON_COMPLEMENTARY_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+
+
 const privateKey =
-  "fca9e96d3964e6a41485ef34a43555ca675cb3aeb4f6c89ffe2cabe69cc3c5ff";
+"fca9e96d3964e6a41485ef34a43555ca675cb3aeb4f6c89ffe2cabe69cc3c5ff";
 
 // console.log(private_key.privateKey)
 // let privateKey = private_key.privateKey;
 
 const provider = new ethers.providers.JsonRpcProvider(
   "https://eth-goerli.g.alchemy.com/v2/rP1ruMXTsu52w677aIgYnn5uPSv7VY6N"
-);
-let wallet = new ethers.Wallet(privateKey); //can you provide with your add private key , ans : yes i provided mine, only.ok
-let walletSigner = wallet.connect(provider);
+  );
+  let wallet = new ethers.Wallet(privateKey); //can you provide with your add private key , ans : yes i provided mine, only.ok
+  let walletSigner = wallet.connect(provider);
+  
 
-let QANOON_Contract = new ethers.Contract(
-  QANOON_TOKEN_ADD,
-  QANOON_TOKEN_ABI,
-  walletSigner
-);
-let QANOON_DOC_Contract = new ethers.Contract(
-  QANOON_DOC_ADD,
-  QANOON_DOC_ABI,
-  walletSigner
-);
+// // CONTRACTS ADDRESSES AND ABI SIGNING WITH THE WALLET
 
-let QANOON_ASASI_Contract = new ethers.Contract(
+  let QANOON_Contract = new ethers.Contract(
+    QANOON_TOKEN_ADD,
+    QANOON_TOKEN_ABI,
+    walletSigner
+    );
+  let QANOON_DOC_Contract = new ethers.Contract(
+    QANOON_DOC_ADD,
+    QANOON_DOC_ABI,
+    walletSigner
+    );
+      
+  let QANOON_ASASI_Contract = new ethers.Contract(
     QANOON_ASASI,
     QANOON_ASASI_ABI,
     walletSigner
-
-);
-
-const port = process.env.PORT || 3000;
-// const { port } = require('./src/config');
-// const {job} = require('./src/contracts/web3_functions/cron_job')
-app.get("/", (req, res) => {
-  const image =
-    "https://cdn.pixabay.com/photo/2018/03/31/05/07/blockchain-3277336__340.png";
-  // res.send("<h1" + "WELCOME TO SAAS ILEGAL BLOCKCHAIN SERVER" + " ></h1>");
-  res.send(
-    "<h1>Hey, There! You Are Currently Running Saas-Ilegal Blockchain Backend Server</h1>"
-  );
-});
-app.set("port", port);
-
-app.post("/createNewWallet", (req, res) => {
-  try {
-    // let walletFound = await UserWallet.findOne({ User_id: req.user.id });
-    // if (walletFound) {
-    //   res.status(409).json({
-    //     success: false,
-    //     message: "wallet already exist!",
-    //     data: walletFound,
-    //   });
-    // }
-    // else {
-    // console.log("i ma in the createWalte");
-    const wallet = ethers.Wallet.createRandom();
-    // new_details = wallet;
-    const encryptedPrivateKey = wallet.privateKey;
-    const mnemonic = wallet.mnemonic.phrase;
-    console.log(mnemonic, "mnemonics");
-    // console.log("i a in the");
-    // const userWallet = new UserWallet({
-    //   User_id: req.user.id,
-    //   address: wallet.address,
-    //   private_key: encryptedPrivateKey,
-    // });
-    // await userWallet.save();
-    res.status(200).json({
-      success: true,
-      message: "wallet created successfully!",
-      data: wallet,
-      privateKey: encryptedPrivateKey,
-      mnemonics: mnemonic,
-    });
-    // }
-  } catch (error) {
-    throw new Error(error);
-  }
-});
-
-app.post("/mintQANOON", async (req, res) => {
-  try {
-    console.log("amount", req.body);
-    let { recieverAccount, recieverAmount } = req.body;
-    console.log("new account", typeof recieverAccount, typeof recieverAmount);
-    console.log("amount", req.body);
-
-    let tx = await QANOON_Contract.mint(recieverAccount, recieverAmount);
-    //  tx.wait();
-    await tx.wait();
-    // console.log("txn",tx);
-    //
-    res.status(200).json({
-      success: true,
-      message: recieverAmount + " Qanoon is minted to " + recieverAccount,
-      data: tx,
-    });
-    return tx;
-  } catch (error) {
-    throw new Error(error);
-  }
-});
-
-app.post("/mintQANAsasi", async (req, res)=>{
-  try {
-    console.log("amount", req.body);
-    let { recieverAccount, recieverAmount } = req.body;
-    console.log("new account", typeof recieverAccount, typeof recieverAmount);
-    console.log("amount", req.body);
-
-    let tx = await QANOON_ASASI_Contract.mint(recieverAccount, recieverAmount);
-    //  tx.wait();
-    await tx.wait();
-    // console.log("txn",tx);
-    //
-    res.status(200).json({
-      success: true,
-      message: recieverAmount + " Qanoon Asasi is minted to " + recieverAccount,
-      data: tx,
-    });
-    return tx;
-  } catch (error) {
-    throw new Error(error);
-  }
-})
-
-app.post("/validateDocument", async (req, res) => {
-  try {
-    let { docOwnerAddress, docType, docURI, docParams } = req.body;
-
-    // documentCreate
-    console.log("docOwnerAdd", docOwnerAddress);
-    console.log("document create", req.body);
-
-    let txn = await QANOON_DOC_Contract.create(
-      docOwnerAddress,
-      docType,
-      docURI,
-      docParams
     );
-    console.log("Transaction", txn);
-    res.status(200).json({
-      success: true,
-      message: "document created successfully!!",
-      data: txn,
-    });
-  } catch (error) {
-    throw new Error(error);
-  }
-});
+        
+  let QANOON_REWARDS_Contract = new ethers.Contract(
+    QANOON_REWARDS,
+    QANOON_REWARDS_ABI,
+    walletSigner
+    );
+  
+  let QANOON_PLUS_Contract = new ethers.Contract(
+    QANOON_PLUS,
+    QANOON_PLUS_ABI,
+    walletSigner
+    );
 
-app.get("/userTokenBalance", async (req, res) => {
-  try {
-    let { userAdd } = req.body;
-    console.log(userAdd, "userAddress");
-    // userAdd = req.body;
-    console.log(req.body, "user Add");
-    let userbalance = await QANOON_Contract.balanceOf(userAdd);
-    let userbal = await ethers.utils.formatUnits(userbalance, 18);
-    console.log(userbalance, "userbalance", userbal, "user bal");
-    res.status(200).json({
-      succes: true,
-      message: "Balance of user " + userAdd,
-      data: userbal,
-    });
-    return ethers.utils.formatUnits(userbalance, 18);
-    // return(userbalance);
-  } catch (error) {
-    throw new Error(error);
-  }
-});
+  let QANOON_PREMIUM_Contract = new ethers.Contract(
+    QANOON_PREMIUM,
+    QANOON_PREMIUM_ABI,
+    walletSigner
+    );
+  
+  let QANOON_COMPLEMENTARY_Contract = new ethers.Contract(
+    QANOON_COMPLEMENTARY,
+    QANOON_COMPLEMENTARY_ABI,
+    walletSigner
+    );
+          
 
-app.get("/userEthBal", async (req, res) => {
-  try {
-    let { userAdd } = req.body;
-    let balance = await provider.getBalance(userAdd);
-    let bal = ethers.utils.formatEther(balance);
-    res.status(200).json({
-      success: true,
-      message: "your ether balance is " + bal,
-      data: bal,
-    });
-    return ethers.utils.formatEther(balance);
-  } catch (error) {
-    throw new Error(error);
-  }
-});
+// PORT DECLARATION
 
-app.listen(port, () => {
-  console.log("Express server listening on port %d in %s mode");
-});
+          const port = process.env.PORT || 3000;
+          // const { port } = require('./src/config');
+          // const {job} = require('./src/contracts/web3_functions/cron_job')
+
+
+// ROUTES DECLARATION
+
+          app.get("/", (req, res) => {
+            const image =
+            "https://cdn.pixabay.com/photo/2018/03/31/05/07/blockchain-3277336__340.png";
+            // res.send("<h1" + "WELCOME TO SAAS ILEGAL BLOCKCHAIN SERVER" + " ></h1>");
+            res.send(
+              "<h1>Hey, There! You Are Currently Running Saas-Ilegal Blockchain Backend Server</h1>"
+              );
+            });
+            app.set("port", port);
+            
+            app.post("/createNewWallet", (req, res) => {
+              try {
+                // let walletFound = await UserWallet.findOne({ User_id: req.user.id });
+                // if (walletFound) {
+                //   res.status(409).json({
+                //     success: false,
+                //     message: "wallet already exist!",
+                //     data: walletFound,
+                //   });
+                // }
+                // else {
+                // console.log("i ma in the createWalte");
+                const wallet = ethers.Wallet.createRandom();
+                // new_details = wallet;
+                const encryptedPrivateKey = wallet.privateKey;
+                const mnemonic = wallet.mnemonic.phrase;
+                console.log(mnemonic, "mnemonics");
+                // console.log("i a in the");
+                // const userWallet = new UserWallet({
+                //   User_id: req.user.id,
+                //   address: wallet.address,
+                //   private_key: encryptedPrivateKey,
+                // });
+                // await userWallet.save();
+                res.status(200).json({
+                  success: true,
+                  message: "wallet created successfully!",
+                  data: wallet,
+                  privateKey: encryptedPrivateKey,
+                  mnemonics: mnemonic,
+                });
+                // }
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+            
+            app.post("/mintQANOON", async (req, res) => {
+              try {
+                console.log("amount", req.body);
+                let { recieverAccount, recieverAmount } = req.body;
+                console.log("new account", typeof recieverAccount, typeof recieverAmount);
+                console.log("amount", req.body);
+                
+                let tx = await QANOON_Contract.mint(recieverAccount, recieverAmount);
+                //  tx.wait();
+                await tx.wait();
+                // console.log("txn",tx);
+                //
+                res.status(200).json({
+                  success: true,
+                  message: recieverAmount + " Qanoon is minted to " + recieverAccount,
+                  data: tx,
+                });
+                return tx;
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+            
+            app.post("/mintQANAsasi", async (req, res) => {
+              try {
+                console.log("amount", req.body);
+                let { recieverAccount, recieverAmount } = req.body;
+                console.log("new account", typeof recieverAccount, typeof recieverAmount);
+                console.log("amount", req.body);
+                
+                let tx = await QANOON_ASASI_Contract.mint(recieverAccount, recieverAmount);
+                //  tx.wait();
+                await tx.wait();
+                // console.log("txn",tx);
+                //
+                res.status(200).json({
+                  success: true,
+                  message: recieverAmount + " Qanoon Asasi Tokens minted to " + recieverAccount,
+                  data: tx,
+                });
+                return tx;
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+            
+            app.post("/mintQANRewards", async (req, res) => {
+              try {
+                console.log("amount", req.body);
+                let { recieverAccount, recieverAmount } = req.body;
+                console.log("new account", typeof recieverAccount, typeof recieverAmount);
+                console.log("amount", req.body);
+                
+                let tx = await QANOON_REWARDS_Contract.mint(recieverAccount, recieverAmount);
+                //  tx.wait();
+                await tx.wait();
+                // console.log("txn",tx);
+                //
+                res.status(200).json({
+                  success: true,
+                  message: recieverAmount + " Qanoon Rewards Tokens minted to " + recieverAccount,
+                  data: tx,
+                });
+                return tx;
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+
+            app.post("/mintQANPlus", async (req, res) => {
+              try {
+                console.log("amount", req.body);
+                let { recieverAccount, recieverAmount } = req.body;
+                console.log("new account", typeof recieverAccount, typeof recieverAmount);
+                console.log("amount", req.body);
+                
+                let tx = await QANOON_PLUS_Contract.mint(recieverAccount, recieverAmount);
+                //  tx.wait();
+                await tx.wait();
+                // console.log("txn",tx);
+                //
+                res.status(200).json({
+                  success: true,
+                  message: recieverAmount + " Qanoon Plus Tokens minted to " + recieverAccount,
+                  data: tx,
+                });
+                return tx;
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+
+            app.post("/mintQANPremium", async (req, res) => {
+              try {
+                console.log("amount", req.body);
+                let { recieverAccount, recieverAmount } = req.body;
+                console.log("new account", typeof recieverAccount, typeof recieverAmount);
+                console.log("amount", req.body);
+                
+                let tx = await QANOON_PREMIUM_Contract.mint(recieverAccount, recieverAmount);
+                //  tx.wait();
+                await tx.wait();
+                // console.log("txn",tx);
+                //
+                res.status(200).json({
+                  success: true,
+                  message: recieverAmount + " Qanoon Premium Tokens minted to " + recieverAccount,
+                  data: tx,
+                });
+                return tx;
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+
+            //QANOON_COMPLEMENTARY_Contract
+
+            app.post("/mintQANComplementary", async (req, res) => {
+              try {
+                console.log("amount", req.body);
+                let { recieverAccount, recieverAmount } = req.body;
+                console.log("new account", typeof recieverAccount, typeof recieverAmount);
+                console.log("amount", req.body);
+                
+                let tx = await QANOON_COMPLEMENTARY_Contract.mint(recieverAccount, recieverAmount);
+                //  tx.wait();
+                await tx.wait();
+                // console.log("txn",tx);
+                //
+                res.status(200).json({
+                  success: true,
+                  message: recieverAmount + " Qanoon Complementary Tokens minted to " + recieverAccount,
+                  data: tx,
+                });
+                return tx;
+              } catch (error) {
+                throw new Error(error);
+              }
+            });
+            
+            app.post("/validateDocument", async (req, res) => {
+              try {
+                let { docOwnerAddress, docType, docURI, docParams } = req.body;
+                
+                // documentCreate
+                console.log("docOwnerAdd", docOwnerAddress);
+                console.log("document create", req.body);
+                
+                let txn = await QANOON_DOC_Contract.create(
+                  docOwnerAddress,
+                  docType,
+                  docURI,
+                  docParams
+                  );
+                  console.log("Transaction", txn);
+                  res.status(200).json({
+                    success: true,
+                    message: "document created successfully!!",
+                    data: txn,
+                  });
+                } catch (error) {
+                  throw new Error(error);
+                }
+              });
+              
+              app.get("/userTokenBalance", async (req, res) => {
+                try {
+                  let { userAdd } = req.body;
+                  console.log(userAdd, "userAddress");
+                  // userAdd = req.body;
+                  console.log(req.body, "user Add");
+                  let userbalance = await QANOON_Contract.balanceOf(userAdd);
+                  let userbal = await ethers.utils.formatUnits(userbalance, 18);
+                  console.log(userbalance, "userbalance", userbal, "user bal");
+                  res.status(200).json({
+                    succes: true,
+                    message: "Balance of user " + userAdd,
+                    data: userbal,
+                  });
+                  return ethers.utils.formatUnits(userbalance, 18);
+                  // return(userbalance);
+                } catch (error) {
+                  throw new Error(error);
+                }
+              });
+              
+              app.get("/userEthBal", async (req, res) => {
+                try {
+                  let { userAdd } = req.body;
+                  let balance = await provider.getBalance(userAdd);
+                  let bal = ethers.utils.formatEther(balance);
+                  res.status(200).json({
+                    success: true,
+                    message: "your ether balance is " + bal,
+                    data: bal,
+                  });
+                  return ethers.utils.formatEther(balance);
+                } catch (error) {
+                  throw new Error(error);
+                }
+              });
+
+
+              
+              app.listen(port, () => {
+                console.log("Express server listening on port %d in %s mode");
+              });
+              
