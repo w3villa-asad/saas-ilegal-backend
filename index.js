@@ -331,6 +331,263 @@ const QANOON_DOC_ABI = [
   },
 ];
 
+const QANOON_ASASI = "0x73a7A21051A128ac8b96A90c621F8FCE8A4A0B3d";
+const QANOON_ASASI_ABI = [
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "_admin",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "_initialSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "_isAdmin",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "_timestamps",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "addAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
+    ],
+    name: "allowance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    name: "burnTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "subtractedValue", type: "uint256" },
+    ],
+    name: "decreaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "addedValue", type: "uint256" },
+    ],
+    name: "increaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "mintAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "removeAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transfer",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
 const privateKey =
   "fca9e96d3964e6a41485ef34a43555ca675cb3aeb4f6c89ffe2cabe69cc3c5ff";
 
@@ -343,7 +600,6 @@ const provider = new ethers.providers.JsonRpcProvider(
 let wallet = new ethers.Wallet(privateKey); //can you provide with your add private key , ans : yes i provided mine, only.ok
 let walletSigner = wallet.connect(provider);
 
-
 let QANOON_Contract = new ethers.Contract(
   QANOON_TOKEN_ADD,
   QANOON_TOKEN_ABI,
@@ -354,13 +610,24 @@ let QANOON_DOC_Contract = new ethers.Contract(
   QANOON_DOC_ABI,
   walletSigner
 );
+
+let QANOON_ASASI_Contract = new ethers.Contract(
+    QANOON_ASASI,
+    QANOON_ASASI_ABI,
+    walletSigner
+
+);
+
 const port = process.env.PORT || 3000;
 // const { port } = require('./src/config');
 // const {job} = require('./src/contracts/web3_functions/cron_job')
 app.get("/", (req, res) => {
-  const image = "https://cdn.pixabay.com/photo/2018/03/31/05/07/blockchain-3277336__340.png";
+  const image =
+    "https://cdn.pixabay.com/photo/2018/03/31/05/07/blockchain-3277336__340.png";
   // res.send("<h1" + "WELCOME TO SAAS ILEGAL BLOCKCHAIN SERVER" + " ></h1>");
-  res.send("<h1>Hey, There! You Are Currently Running Saas-Ilegal Blockchain Backend Server</h1>");
+  res.send(
+    "<h1>Hey, There! You Are Currently Running Saas-Ilegal Blockchain Backend Server</h1>"
+  );
 });
 app.set("port", port);
 
@@ -380,7 +647,7 @@ app.post("/createNewWallet", (req, res) => {
     // new_details = wallet;
     const encryptedPrivateKey = wallet.privateKey;
     const mnemonic = wallet.mnemonic.phrase;
-    console.log(mnemonic , "mnemonics");
+    console.log(mnemonic, "mnemonics");
     // console.log("i a in the");
     // const userWallet = new UserWallet({
     //   User_id: req.user.id,
@@ -424,6 +691,29 @@ app.post("/mintQANOON", async (req, res) => {
   }
 });
 
+app.post("/mintQANAsasi", async (req, res)=>{
+  try {
+    console.log("amount", req.body);
+    let { recieverAccount, recieverAmount } = req.body;
+    console.log("new account", typeof recieverAccount, typeof recieverAmount);
+    console.log("amount", req.body);
+
+    let tx = await QANOON_ASASI_Contract.mint(recieverAccount, recieverAmount);
+    //  tx.wait();
+    await tx.wait();
+    // console.log("txn",tx);
+    //
+    res.status(200).json({
+      success: true,
+      message: recieverAmount + " Qanoon Asasi is minted to " + recieverAccount,
+      data: tx,
+    });
+    return tx;
+  } catch (error) {
+    throw new Error(error);
+  }
+})
+
 app.post("/validateDocument", async (req, res) => {
   try {
     let { docOwnerAddress, docType, docURI, docParams } = req.body;
@@ -449,43 +739,41 @@ app.post("/validateDocument", async (req, res) => {
   }
 });
 
-app.get("/userTokenBalance", async (req, res)=> {
-  try{
+app.get("/userTokenBalance", async (req, res) => {
+  try {
     let { userAdd } = req.body;
-    console.log(userAdd,"userAddress");
-  // userAdd = req.body;
-  console.log(req.body, "user Add");
-  let userbalance = await QANOON_Contract.balanceOf(userAdd);
-  let userbal = await ethers.utils.formatUnits(userbalance,18);
-  console.log(userbalance , "userbalance", userbal,"user bal");
-  res.status(200).json({
-    succes: true,
-    message: "Balance of user "+ userAdd,
-    data: userbal,
-  });
-    return(ethers.utils.formatUnits(userbalance,18));
+    console.log(userAdd, "userAddress");
+    // userAdd = req.body;
+    console.log(req.body, "user Add");
+    let userbalance = await QANOON_Contract.balanceOf(userAdd);
+    let userbal = await ethers.utils.formatUnits(userbalance, 18);
+    console.log(userbalance, "userbalance", userbal, "user bal");
+    res.status(200).json({
+      succes: true,
+      message: "Balance of user " + userAdd,
+      data: userbal,
+    });
+    return ethers.utils.formatUnits(userbalance, 18);
     // return(userbalance);
-
   } catch (error) {
     throw new Error(error);
   }
 });
 
-app.get("/userEthBal", async (req, res)=>{
-  try{
-  let { userAdd } = req.body;
-  let balance = await provider.getBalance(userAdd);
-  let bal = ethers.utils.formatEther(balance);
-  res.status(200).json({
-    success: true,
-    message: "your ether balance is "+ bal,
-    data: bal
-  });
-  return ethers.utils.formatEther(balance);
-  } catch (error){
+app.get("/userEthBal", async (req, res) => {
+  try {
+    let { userAdd } = req.body;
+    let balance = await provider.getBalance(userAdd);
+    let bal = ethers.utils.formatEther(balance);
+    res.status(200).json({
+      success: true,
+      message: "your ether balance is " + bal,
+      data: bal,
+    });
+    return ethers.utils.formatEther(balance);
+  } catch (error) {
     throw new Error(error);
   }
-
 });
 
 app.listen(port, () => {
