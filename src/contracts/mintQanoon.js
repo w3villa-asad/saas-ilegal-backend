@@ -73,7 +73,7 @@ const createTransfer = async (req, res) => {
       // console.log("new account", typeof recieverAccount, typeof recieverAmount);
       // console.log("amount", req.body);
       
-      let tx = await contracts.QANOON_ASASI_Contract.mint(recieverAccount, recieverAmount);
+      let tx = await contracts.QANOON_ASASI_Contract.mint(recieverAccount, ethers.utils.parseUnits(recieverAmount.toString(), 18));
       tx.wait();
       await tx.wait();
       // console.log("txn",tx);
@@ -118,7 +118,7 @@ let mintREWARDS = async (req, res) => {
     console.log("new account", typeof recieverAccount, typeof recieverAmount);
     console.log("amount", req.body);
     
-    let tx = await contracts.QANOON_REWARDS_Contract.mint(recieverAccount, recieverAmount);
+    let tx = await contracts.QANOON_REWARDS_Contract.mint(recieverAccount, ethers.utils.parseUnits(recieverAmount.toString(), 18));
     //  tx.wait();
     await tx.wait();
     // console.log("txn",tx);
@@ -141,7 +141,7 @@ let mintPLUS = async (req, res) => {
     // console.log("new account", typeof recieverAccount, typeof recieverAmount);
     // console.log("amount", req.body);
     
-    let tx = await contracts.QANOON_PLUS_Contract.buy(recieverAccount, recieverAmount);
+    let tx = await contracts.QANOON_PLUS_Contract.buy(recieverAccount, ethers.utils.parseUnits(recieverAmount.toString(), 18));
     //  tx.wait();
     await tx.wait();
     // console.log("txn",tx);
@@ -164,7 +164,7 @@ let mintPREMIUM = async (req, res) => {
     // console.log("new account", typeof recieverAccount, typeof recieverAmount);
     // console.log("amount", req.body);
     
-    let tx = await contracts.QANOON_PREMIUM_Contract.stake(time, uid, recieverAmount);
+    let tx = await contracts.QANOON_PREMIUM_Contract.stake(time, uid, ethers.utils.parseUnits(recieverAmount.toString(), 18));
     //  tx.wait();
     await tx.wait();
     // console.log("txn",tx);
@@ -186,8 +186,11 @@ let mintCOMPLEMENTARY = async (req, res) => {
     let { recieverAccount, recieverAmount } = req.body;
     // console.log("new account", typeof recieverAccount, typeof recieverAmount);
     // console.log("amount", req.body);
+
+    recieverAmount = recieverAmount;
+    console.log("recieverAmount", recieverAmount);
     
-    let tx = await contracts.QANOON_COMPLEMENTARY_Contract.mint(recieverAccount, recieverAmount);
+    let tx = await contracts.QANOON_COMPLEMENTARY_Contract.mint(recieverAccount, ethers.utils.parseUnits(recieverAmount.toString(), 18));
     //  tx.wait();
     await tx.wait();
     // console.log("txn",tx);

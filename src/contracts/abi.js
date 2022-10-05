@@ -1359,6 +1359,20 @@ const QANOON_COMPLEMENTARY_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "decimals",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
@@ -1383,6 +1397,13 @@ const QANOON_COMPLEMENTARY_ABI = [
     name: "increaseAllowance",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "maxSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -1467,5 +1488,5 @@ module.exports = {
   QANOON_REWARDS_ABI,
   QANOON_PLUS_ABI,
   QANOON_PREMIUM_ABI,
-  QANOON_COMPLEMENTARY_ABI
+  QANOON_COMPLEMENTARY_ABI,
 };
