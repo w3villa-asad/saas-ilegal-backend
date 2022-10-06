@@ -601,7 +601,7 @@ const QANOON_ASASI_ABI = [
   },
 ];
 
-const QANOON_REWARDS = "0x8048475349df075A64eEe5aeD94D8b26440cB409";
+const QANOON_REWARDS = "0x4df17C8E7EF6fBeF9F21EF4033454E018902204A";
 const QANOON_REWARDS_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -671,6 +671,20 @@ const QANOON_REWARDS_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "_isAdmin",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "addAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "owner", type: "address" },
       { internalType: "address", name: "spender", type: "address" },
@@ -706,6 +720,13 @@ const QANOON_REWARDS_ABI = [
   },
   {
     inputs: [],
+    name: "currentSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "decimals",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
     stateMutability: "view",
@@ -732,11 +753,28 @@ const QANOON_REWARDS_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "increaseSupply",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "_account", type: "address" },
       { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "mintAdmin",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -753,6 +791,13 @@ const QANOON_REWARDS_ABI = [
     name: "owner",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "removeAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -2037,6 +2082,33 @@ app.post("/addInvestorSupply", async (req, res) => {
         success: true,
         message: "you are an investor",
         data: sendInvestorSupply,
+      });
+    } else {
+      res.status(404).json({
+        success: true,
+        message: "you are not an investor",
+      });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.post("/giveRewardsToUsers", async (req, res) => {
+  try {
+    let { adminAdd, userAdd, userAmount } = req.body;
+    let admin = await QANOON_REWARDS_Contract._isAdmin(adminAdd);
+    console.log("rewards admin", admin);
+    if (admin == true) {
+      let sendUserSupply = await QANOON_REWARDS_Contract.mintAdmin(
+        userAdd,
+        userAmount
+      );
+      // res.status
+      res.status(200).json({
+        success: true,
+        message: "you are an investor",
+        data: sendUserSupply,
       });
     } else {
       res.status(404).json({
