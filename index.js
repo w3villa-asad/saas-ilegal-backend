@@ -1977,6 +1977,62 @@ app.get("/userEthBal", async (req, res) => {
   }
 });
 
+app.post("/addPlusInvestors", async(req, res)=>{
+  try{
+    let { ownerAdd, userAdd } = req.body;
+    console.log("plus investors request body", req.body);
+    let ownerAddress = await QANOON_PLUS_Contract.owner();
+    console.log("plus investor owner", ownerAddress , ownerAdd);
+    if (ownerAdd == ownerAddress)
+    {
+      let addInvest = await QANOON_PLUS_Contract.addInvestor(userAdd);
+      console.log("plus investors add", addInvest);
+      await addInvest.wait();
+      // let giveInvestorSupply = await QANOON_PLUS_Contract.issueInvestorSupply(userAdd, ethers.utils.formatUnits(userAmount, 18));
+      // await giveInvestorSupply.wait();
+      res.status(200).json({
+        success: true,
+        message: userAdd + "added as investor" ,
+        data: addInvest,
+      })
+    }
+    else{
+      err = "owner can only add Investors";
+      return err;
+    }
+
+  } catch (error){
+    throw new Error(error);
+  }
+})
+
+app.post("/addInvestorSupply", async(req, res)=>{
+  try{
+    let {userAdd, userAmount} = req.body;
+    let owner = await QANOON_PLUS_Contract._isInvestor(userAdd);
+    console.log("plus owner", owner);
+    if (owner == true){
+      let sendInvestorSupply = await QANOON_PLUS_Contract.issueInvestorSupply(userAdd, userAmount);
+      // res.status
+      res.status(200).json({
+        success: true,
+        message: "you are an investor",
+        data: sendInvestorSupply
+      });
+    }
+    else {
+      res.status(404).json({
+        success: true,
+        message: "you are not an investor"
+      });
+
+    }
+  } catch (error){
+    throw new Error(error);
+  }
+})
+
+
 app.listen(port, () => {
   console.log("Express server listening on port %d in %s mode");
 });
