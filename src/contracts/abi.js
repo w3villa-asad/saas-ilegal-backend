@@ -661,6 +661,20 @@ const QANOON_REWARDS_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "_isAdmin",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "addAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "owner", type: "address" },
       { internalType: "address", name: "spender", type: "address" },
@@ -696,6 +710,13 @@ const QANOON_REWARDS_ABI = [
   },
   {
     inputs: [],
+    name: "currentSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "decimals",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
     stateMutability: "view",
@@ -722,11 +743,28 @@ const QANOON_REWARDS_ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "increaseSupply",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "_account", type: "address" },
       { internalType: "uint256", name: "amount", type: "uint256" },
     ],
     name: "mint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "mintAdmin",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -743,6 +781,13 @@ const QANOON_REWARDS_ABI = [
     name: "owner",
     outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "removeAdmin",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
