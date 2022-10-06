@@ -806,7 +806,7 @@ const QANOON_REWARDS_ABI = [
   },
 ];
 
-const QANOON_PLUS = "0xc480D0D18C2060BC71c6aE0986D43AbE6CA6E6b4";
+const QANOON_PLUS = "0x588ba925417AEae94005b5D3bd859ADacd0ac5ab";
 const QANOON_PLUS_ABI = [
   {
     inputs: [
@@ -1071,6 +1071,15 @@ const QANOON_PLUS_ABI = [
   {
     inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
     name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_updateQanoonAsasi", type: "address" },
+    ],
+    name: "updateAsasi",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
