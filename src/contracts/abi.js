@@ -855,9 +855,23 @@ const QANOON_PLUS_ABI = [
   },
   {
     inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "_isInvestor",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "_timestamps",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "addInvestor",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -926,11 +940,38 @@ const QANOON_PLUS_ABI = [
   },
   {
     inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "_amount", type: "uint256" },
+    ],
+    name: "doubleUpSupply",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       { internalType: "address", name: "spender", type: "address" },
       { internalType: "uint256", name: "addedValue", type: "uint256" },
     ],
     name: "increaseAllowance",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "increaseSupply",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "_amount", type: "uint256" },
+    ],
+    name: "issueInvestorSupply",
+    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -955,6 +996,13 @@ const QANOON_PLUS_ABI = [
       { internalType: "contract IQanoonAsasi", name: "", type: "address" },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_account", type: "address" }],
+    name: "removeInvestor",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
