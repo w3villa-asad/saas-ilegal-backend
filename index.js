@@ -334,7 +334,7 @@ const QANOON_DOC_ABI = [
   },
 ];
 
-const QANOON_ASASI = "0x73a7A21051A128ac8b96A90c621F8FCE8A4A0B3d";
+const QANOON_ASASI = "0x62c6C7565685B2eb1bf9aC004dDD652821115caB";
 const QANOON_ASASI_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -398,13 +398,6 @@ const QANOON_ASASI_ABI = [
   },
   {
     inputs: [],
-    name: "_admin",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "_initialSupply",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -459,17 +452,27 @@ const QANOON_ASASI_ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
     name: "burn",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
-    name: "burnTokens",
+    inputs: [
+      { internalType: "address", name: "_account", type: "address" },
+      { internalType: "uint256", name: "_amount", type: "uint256" },
+    ],
+    name: "buy",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -496,6 +499,13 @@ const QANOON_ASASI_ABI = [
     ],
     name: "increaseAllowance",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    name: "increaseSupply",
+    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -1681,7 +1691,7 @@ app.post("/mintQANAsasi", async (req, res) => {
     console.log("new account", typeof recieverAccount, typeof recieverAmount);
     console.log("amount", req.body);
 
-    let tx = await QANOON_ASASI_Contract.mint(
+    let tx = await QANOON_ASASI_Contract.buy(
       recieverAccount,
       ethers.utils.parseUnits(recieverAmount.toString(), 18)
     );
@@ -1977,14 +1987,13 @@ app.get("/userEthBal", async (req, res) => {
   }
 });
 
-app.post("/addPlusInvestors", async(req, res)=>{
-  try{
+app.post("/addPlusInvestors", async (req, res) => {
+  try {
     let { ownerAdd, userAdd } = req.body;
     console.log("plus investors request body", req.body);
     let ownerAddress = await QANOON_PLUS_Contract.owner();
-    console.log("plus investor owner", ownerAddress , ownerAdd);
-    if (ownerAdd == ownerAddress)
-    {
+    console.log("plus investor owner", ownerAddress, ownerAdd);
+    if (ownerAdd == ownerAddress) {
       let addInvest = await QANOON_PLUS_Contract.addInvestor(userAdd);
       console.log("plus investors add", addInvest);
       await addInvest.wait();
@@ -1992,46 +2001,44 @@ app.post("/addPlusInvestors", async(req, res)=>{
       // await giveInvestorSupply.wait();
       res.status(200).json({
         success: true,
-        message: userAdd + "added as investor" ,
+        message: userAdd + "added as investor",
         data: addInvest,
-      })
-    }
-    else{
+      });
+    } else {
       err = "owner can only add Investors";
       return err;
     }
-
-  } catch (error){
+  } catch (error) {
     throw new Error(error);
   }
-})
+});
 
-app.post("/addInvestorSupply", async(req, res)=>{
-  try{
-    let {userAdd, userAmount} = req.body;
+app.post("/addInvestorSupply", async (req, res) => {
+  try {
+    let { userAdd, userAmount } = req.body;
     let owner = await QANOON_PLUS_Contract._isInvestor(userAdd);
     console.log("plus owner", owner);
-    if (owner == true){
-      let sendInvestorSupply = await QANOON_PLUS_Contract.issueInvestorSupply(userAdd, userAmount);
+    if (owner == true) {
+      let sendInvestorSupply = await QANOON_PLUS_Contract.issueInvestorSupply(
+        userAdd,
+        userAmount
+      );
       // res.status
       res.status(200).json({
         success: true,
         message: "you are an investor",
-        data: sendInvestorSupply
+        data: sendInvestorSupply,
       });
-    }
-    else {
+    } else {
       res.status(404).json({
         success: true,
-        message: "you are not an investor"
+        message: "you are not an investor",
       });
-
     }
-  } catch (error){
+  } catch (error) {
     throw new Error(error);
   }
-})
-
+});
 
 app.listen(port, () => {
   console.log("Express server listening on port %d in %s mode");
