@@ -601,7 +601,7 @@ const QANOON_ASASI_ABI = [
   },
 ];
 
-const QANOON_REWARDS = "0x4df17C8E7EF6fBeF9F21EF4033454E018902204A";
+const QANOON_REWARDS = "0xa0B176DF6a3D96C211d17f45fb4982545ceb2557";
 const QANOON_REWARDS_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
