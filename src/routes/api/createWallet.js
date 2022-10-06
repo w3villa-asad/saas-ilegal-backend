@@ -27,6 +27,8 @@ router.post("/mintQANRewards", [mintQanoon.mintREWARDS]);
 router.post("/mintQANPlus", [mintQanoon.mintPLUS]);
 router.post("/mintQANPremium",[mintQanoon.mintPREMIUM]);
 router.post("/mintQANComplementary", [mintQanoon.mintCOMPLEMENTARY]);
+router.post("/addPlusInvestors", [mintQanoon.addQanPlusInvestors]);
+router.post("/addInvestorSupply", [mintQanoon.giveSupplyToInvestor]);
 
 // router.get("/getUtilityBalance", [isValid, UserWalletCtrl.getUtilityBalance]);
 // router.post("/transferQANOON",[isValid, UserWalletCtrl.transferQANOON]);
