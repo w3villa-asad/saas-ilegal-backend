@@ -2107,13 +2107,13 @@ app.post("/giveRewardsToUsers", async (req, res) => {
       // res.status
       res.status(200).json({
         success: true,
-        message: "you are an investor",
+        message: "you are an admin",
         data: sendUserSupply,
       });
     } else {
       res.status(404).json({
         success: true,
-        message: "you are not an investor",
+        message: "you are not an admin",
       });
     }
   } catch (error) {
