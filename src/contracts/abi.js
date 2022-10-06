@@ -1064,6 +1064,15 @@ const QANOON_PLUS_ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [
+      { internalType: "address", name: "_updateQanoonAsasi", type: "address" },
+    ],
+    name: "updateAsasi",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ];
 
 const QANOON_PREMIUM_ABI = [
