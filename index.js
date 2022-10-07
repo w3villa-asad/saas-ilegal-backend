@@ -601,7 +601,7 @@ const QANOON_ASASI_ABI = [
   },
 ];
 
-const QANOON_REWARDS = "0xa0B176DF6a3D96C211d17f45fb4982545ceb2557";
+const QANOON_REWARDS = "0xe491AA19c2C478D08eea25Cbf62FE90B714a8CFD";
 const QANOON_REWARDS_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -2093,6 +2093,34 @@ app.post("/addInvestorSupply", async (req, res) => {
     throw new Error(error);
   }
 });
+
+app.post("/addRewardsAdmin", async (req, res)=> {
+  try {
+    let { ownerAdd, adminAdd } = req.body;
+    console.log("rewards admins request body", req.body);
+    let ownerAddress = await QANOON_REWARDS_Contract.owner();
+    console.log("rewards admins owner", ownerAddress, ownerAdd);
+    if (ownerAdd == ownerAddress) {
+      let addAdmins = await QANOON_REWARDS_Contract.addAdmin(adminAdd);
+      console.log("plus investors add", addAdmins);
+      // await addAdmins.wait();
+      // let giveInvestorSupply = await QANOON_PLUS_Contract.issueInvestorSupply(userAdd, ethers.utils.formatUnits(userAmount, 18));
+      // await giveInvestorSupply.wait();
+      res.status(200).json({
+        success: true,
+        message: adminAdd + " you are added as admin",
+        data: addAdmins,
+      });
+    } else {
+      res.status(404).json({
+        success: true,
+        message: "you are not an admin",
+      });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+})
 
 app.post("/giveRewardsToUsers", async (req, res) => {
   try {
