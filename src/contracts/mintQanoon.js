@@ -260,6 +260,61 @@ let giveSupplyToInvestor = async (req, res)=> {
     throw new Error(error);
   }
 }
+
+let addRewardAdmin = async (req, res)=> {
+  try {
+    let { ownerAdd, adminAdd } = req.body;
+    console.log("rewards admins request body", req.body);
+    let ownerAddress = await contracts.QANOON_REWARDS_Contract.owner();
+    console.log("rewards admins owner", ownerAddress, ownerAdd);
+    if (ownerAdd == ownerAddress) {
+      let addAdmins = await contracts.QANOON_REWARDS_Contract.addAdmin(adminAdd);
+      console.log("plus investors add", addAdmins);
+      // await addAdmins.wait();
+      // let giveInvestorSupply = await QANOON_PLUS_Contract.issueInvestorSupply(userAdd, ethers.utils.formatUnits(userAmount, 18));
+      // await giveInvestorSupply.wait();
+      res.status(200).json({
+        success: true,
+        message: adminAdd + " you are added as admin",
+        data: addAdmins,
+      });
+    } else {
+      res.status(404).json({
+        success: true,
+        message: "you are not an admin",
+      });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+let giveRewardsToUser = async (req, res)=> {
+  try {
+    let { adminAdd, userAdd, userAmount } = req.body;
+    let admin = await contracts.QANOON_REWARDS_Contract._isAdmin(adminAdd);
+    console.log("rewards admin", admin);
+    if (admin == true) {
+      let sendUserSupply = await contracts.QANOON_REWARDS_Contract.mintAdmin(
+        userAdd,
+        userAmount
+      );
+      // res.status
+      res.status(200).json({
+        success: true,
+        message: "you are an admin",
+        data: sendUserSupply,
+      });
+    } else {
+      res.status(404).json({
+        success: true,
+        message: "you are not an admin",
+      });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+}
     
 
 module.exports = {
@@ -273,6 +328,9 @@ module.exports = {
     mintPREMIUM,
     mintCOMPLEMENTARY,
     addQanPlusInvestors,
-    giveSupplyToInvestor
+    giveSupplyToInvestor,
+    addRewardAdmin,
+    giveRewardsToUser
+
 
 }
