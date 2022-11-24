@@ -1936,7 +1936,7 @@ app.post("/userEthBalance", async (req, res) => {
   }
 });
 
-app.get("/userAsasiBalance", async (req, res) => {
+app.post("/userAsasiBalance", async (req, res) => {
   try {
     let { userAdd } = req.body;
     console.log(userAdd, "userAddress");
@@ -1957,7 +1957,7 @@ app.get("/userAsasiBalance", async (req, res) => {
   }
 });
 
-app.get("/userRewardsBalance", async (req, res) => {
+app.post("/userRewardsBalance", async (req, res) => {
   try {
     let { userAdd } = req.body;
     console.log(userAdd, "userAddress");
@@ -1978,7 +1978,7 @@ app.get("/userRewardsBalance", async (req, res) => {
   }
 });
 
-app.get("/userPlusBalance", async (req, res) => {
+app.post("/userPlusBalance", async (req, res) => {
   try {
     let { userAdd } = req.body;
     console.log(userAdd, "userAddress");
@@ -1999,7 +1999,7 @@ app.get("/userPlusBalance", async (req, res) => {
   }
 });
 
-app.get("/userPremiumBalance", async (req, res) => {
+app.post("/userPremiumBalance", async (req, res) => {
   try {
     let { userAdd } = req.body;
     console.log(userAdd, "userAddress");
@@ -2020,7 +2020,7 @@ app.get("/userPremiumBalance", async (req, res) => {
   }
 });
 
-app.get("/userComplementaryBalance", async (req, res) => {
+app.post("/userComplementaryBalance", async (req, res) => {
   try {
     let { userAdd } = req.body;
     console.log(userAdd, "userAddress");
