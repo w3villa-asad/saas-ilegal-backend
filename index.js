@@ -1131,7 +1131,7 @@ const QANOON_PLUS_ABI = [
   },
 ];
 
-const QANOON_PREMIUM = "0xCA8FaB902d336B0f78E1bC38de7B791240E42bbb";
+const QANOON_PREMIUM = "0x5146ae02EE20d51A713F7e8d214c02d42f4725D9";
 const QANOON_PREMIUM_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -1275,7 +1275,7 @@ const QANOON_PREMIUM_ABI = [
     ],
     name: "mint",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -2110,7 +2110,7 @@ app.post("/addInvestorSupply", async (req, res) => {
   }
 });
 
-app.post("/addRewardsAdmin", async (req, res)=> {
+app.post("/addRewardsAdmin", async (req, res) => {
   try {
     let { ownerAdd, adminAdd } = req.body;
     console.log("rewards admins request body", req.body);
@@ -2136,7 +2136,7 @@ app.post("/addRewardsAdmin", async (req, res)=> {
   } catch (error) {
     throw new Error(error);
   }
-})
+});
 
 app.post("/giveRewardsToUsers", async (req, res) => {
   try {
