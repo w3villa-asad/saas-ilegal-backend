@@ -1761,6 +1761,10 @@ app.post("/mintQANAsasi", async (req, res) => {
     });
     return tx;
   } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
     throw new Error(error);
   }
 });
