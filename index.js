@@ -1131,6 +1131,305 @@ const QANOON_PLUS_ABI = [
   },
 ];
 
+const QANOON_VOTING = "0xC41D1CcDca169bdBADb44EeBBeB33c3bC6bC18CC";
+const QANOON_VOTING_ABI = [
+  {
+    inputs: [
+      { internalType: "address", name: "_qanPremium", type: "address" },
+      { internalType: "address", name: "_qanPlus", type: "address" },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: "address", name: "from", type: "address" },
+      { indexed: true, internalType: "address", name: "to", type: "address" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Transfer",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "QANPlus",
+    outputs: [{ internalType: "contract IPlus", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "QANPremium",
+    outputs: [{ internalType: "contract IPremium", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "address", name: "spender", type: "address" },
+    ],
+    name: "allowance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "approve",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "decimals",
+    outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "subtractedValue", type: "uint256" },
+    ],
+    name: "decreaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "spender", type: "address" },
+      { internalType: "uint256", name: "addedValue", type: "uint256" },
+    ],
+    name: "increaseAllowance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "name",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "plusTokensPerVote",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "plusVoteBal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "premiumTokensPerVote",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "premiumVoteBal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "prevPlusBal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "prevPremiumBal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_votee", type: "address" }],
+    name: "redeemPlusPerVote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "_votee", type: "address" }],
+    name: "redeemPremiumPerVote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "remPlusBal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "remPremiumBal",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "_user", type: "address" },
+      { internalType: "uint256", name: "_amount", type: "uint256" },
+    ],
+    name: "sendVote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_premiumPerVote", type: "uint256" },
+      { internalType: "uint256", name: "_plusPerVote", type: "uint256" },
+    ],
+    name: "setTokensPerVote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [{ internalType: "string", name: "", type: "string" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "totalVotes",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transfer",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "from", type: "address" },
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    name: "transferFrom",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
 const QANOON_PREMIUM = "0x5146ae02EE20d51A713F7e8d214c02d42f4725D9";
 const QANOON_PREMIUM_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
@@ -1648,6 +1947,12 @@ let QANOON_PLUS_Contract = new ethers.Contract(
   walletSigner
 );
 
+let QANOON_VOTING_Contract = new ethers.Contract(
+  QANOON_VOTING,
+  QANOON_VOTING_ABI,
+  walletSigner
+);
+
 let QANOON_PREMIUM_Contract = new ethers.Contract(
   QANOON_PREMIUM,
   QANOON_PREMIUM_ABI,
@@ -1878,6 +2183,87 @@ app.post("/mintQANComplementary", async (req, res) => {
   }
 });
 
+app.post("/redeemVotesUsingPlus", async (req, res) => {
+  try {
+    let { votee } = req.body;
+    console.log("new account", typeof votee);
+
+    let tx = await QANOON_VOTING_Contract.redeemPlusPerVote(votee);
+    //  tx.wait();
+    await tx.wait();
+    // console.log("txn",tx);
+    //
+    res.status(200).json({
+      success: true,
+      message: "Qanoon Voting Tokens minted to " +
+        votee,
+      data: tx,
+    });
+    return tx;
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "error in vote redemption",
+      data: error,
+    });
+    throw new Error(error);
+  }
+});
+
+app.post("/redeemVotesUsingPremium", async (req, res) => {
+  try {
+    let { votee } = req.body;
+    console.log("new account", typeof votee);
+
+    let tx = await QANOON_VOTING_Contract.redeemPremiumPerVote(votee);
+    //  tx.wait();
+    await tx.wait();
+    // console.log("txn",tx);
+    //
+    res.status(200).json({
+      success: true,
+      message: "Qanoon Voting Tokens minted to " +
+        votee,
+      data: tx,
+    });
+    return tx;
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "error in vote redemption",
+      data: error,
+    });
+    throw new Error(error);
+  }
+});
+
+app.post("/sendVotesByOwner", async (req, res) => {
+  try {
+    let { votee, votes } = req.body;
+    console.log("new account", typeof votee);
+
+    let tx = await QANOON_VOTING_Contract.sendVote(votee, votes);
+    //  tx.wait();
+    await tx.wait();
+    // console.log("txn",tx);
+    //
+    res.status(200).json({
+      success: true,
+      message: votes + "Qanoon Voting Tokens minted to " +
+        votee,
+      data: tx,
+    });
+    return tx;
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "error in vote redemption",
+      data: error,
+    });
+    throw new Error(error);
+  }
+});
+
 app.post("/validateDocument", async (req, res) => {
   try {
     let { docOwnerAddress, docType, docURI, docParams } = req.body;
@@ -1994,6 +2380,27 @@ app.post("/userPlusBalance", async (req, res) => {
     res.status(200).json({
       succes: true,
       message: "Qanoon Plus Balance of user " + userAdd,
+      data: userbal,
+    });
+    return ethers.utils.formatUnits(userbalance, 18);
+    // return(userbalance);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+app.post("/userVoteBalance", async (req, res) => {
+  try {
+    let { userAdd } = req.body;
+    console.log(userAdd, "userAddress");
+    // userAdd = req.body;
+    console.log(req.body, "user Add");
+    let userbalance = await QANOON_VOTING_Contract.balanceOf(userAdd);
+    let userbal = await ethers.utils.formatUnits(userbalance);
+    console.log(userbalance, "userbalance", userbal, "user bal");
+    res.status(200).json({
+      succes: true,
+      message: "Qanoon Voting Balance of user " + userAdd,
       data: userbal,
     });
     return ethers.utils.formatUnits(userbalance, 18);
