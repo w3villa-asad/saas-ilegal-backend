@@ -334,7 +334,7 @@ const QANOON_DOC_ABI = [
   },
 ];
 
-const QANOON_ASASI = "0x62c6C7565685B2eb1bf9aC004dDD652821115caB";
+const QANOON_ASASI = "0x053daE43657034D9aAa3515F4844549a89C5005f";
 const QANOON_ASASI_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -601,7 +601,7 @@ const QANOON_ASASI_ABI = [
   },
 ];
 
-const QANOON_REWARDS = "0xe491AA19c2C478D08eea25Cbf62FE90B714a8CFD";
+const QANOON_REWARDS = "0x4ae8a334eC92AC2412f8D4b688cAD431CC838cE0";
 const QANOON_REWARDS_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -851,7 +851,7 @@ const QANOON_REWARDS_ABI = [
   },
 ];
 
-const QANOON_PLUS = "0x588ba925417AEae94005b5D3bd859ADacd0ac5ab";
+const QANOON_PLUS = "0xE17353314EF11eebf5322861C632e4CEd66F099E";
 const QANOON_PLUS_ABI = [
   {
     inputs: [
@@ -1131,7 +1131,7 @@ const QANOON_PLUS_ABI = [
   },
 ];
 
-const QANOON_VOTING = "0xC41D1CcDca169bdBADb44EeBBeB33c3bC6bC18CC";
+const QANOON_VOTING = "0x1D4DFb03A01779fEbD1c911E9AAEeBb2CCF8c2Fe";
 const QANOON_VOTING_ABI = [
   {
     inputs: [
@@ -1430,7 +1430,7 @@ const QANOON_VOTING_ABI = [
   },
 ];
 
-const QANOON_PREMIUM = "0x5146ae02EE20d51A713F7e8d214c02d42f4725D9";
+const QANOON_PREMIUM = "0xFb5f497919aCBe2cfC1329F3fbf97981C83f1693";
 const QANOON_PREMIUM_ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -2195,8 +2195,7 @@ app.post("/redeemVotesUsingPlus", async (req, res) => {
     //
     res.status(200).json({
       success: true,
-      message: "Qanoon Voting Tokens minted to " +
-        votee,
+      message: "Qanoon Voting Tokens minted to " + votee,
       data: tx,
     });
     return tx;
@@ -2222,8 +2221,7 @@ app.post("/redeemVotesUsingPremium", async (req, res) => {
     //
     res.status(200).json({
       success: true,
-      message: "Qanoon Voting Tokens minted to " +
-        votee,
+      message: "Qanoon Voting Tokens minted to " + votee,
       data: tx,
     });
     return tx;
@@ -2242,15 +2240,17 @@ app.post("/sendVotesByOwner", async (req, res) => {
     let { votee, votes } = req.body;
     console.log("new account", typeof votee);
 
-    let tx = await QANOON_VOTING_Contract.sendVote(votee, votes);
+    let tx = await QANOON_VOTING_Contract.sendVote(
+      votee,
+      ethers.utils.parseUnits(votes.toString(), 18)
+    );
     //  tx.wait();
     await tx.wait();
     // console.log("txn",tx);
     //
     res.status(200).json({
       success: true,
-      message: votes + "Qanoon Voting Tokens minted to " +
-        votee,
+      message: votes + "Qanoon Voting Tokens minted to " + votee,
       data: tx,
     });
     return tx;
